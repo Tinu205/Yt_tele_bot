@@ -12,10 +12,19 @@ def get_video_transcript(video_id):
 
 def give_subs(video_id):
     transcript = get_video_transcript(video_id)
-
     if not transcript:
         return "Error retrieving transcript."
-
     subs = [line['text'] for line in transcript]
     full_transcript = '\n'.join(subs)  # Use '\n' for line breaks
     return full_transcript
+
+def check_link(fulnk):
+    try:
+            video_id = fulnk.split("watch?v=")[1]
+    except IndexError:
+            try:
+                video_id = fulnk.split("youtu.be/")[1]
+            except IndexError:
+                video_id = 0;
+
+    return video_id

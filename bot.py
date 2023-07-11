@@ -24,10 +24,13 @@ def f_link(message):
     fulnk = arr.split("getsubs")[1].strip()  # Remove leading/trailing whitespace
     print(f"{message.from_user.username}:{message.from_user.first_name} -> {message.text}")
     if (fulnk):
-        try:
-            bot.reply_to(message,give_subs(check_link(fulnk)))
-        except:
-            bot.reply_to(message,"### Message form developer the telegram api dosent allows to send too many strings so please bare with until we fix this, you can try with videos with less subs!!!, thank you!!")
+        if(check_link(fulnk)):
+            try:
+                bot.reply_to(message,give_subs(check_link(fulnk)))
+            except:
+                bot.reply_to(message,"### Message form developer the telegram api dosent allows to send too many strings so please bare with until we fix this, you can try with videos with less subs!!!, thank you!!")
+        else:
+            bot.reply_to(message,"Enter a valid Link")
     else:
         bot.reply_to(message, "Command usage: /getsubs <link>")
 
