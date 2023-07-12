@@ -1,7 +1,8 @@
 import os
 from main import give_subs,check_link
 import telebot
-
+from summarizer import rise
+import time
 
 bot_tok = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(bot_tok)
@@ -26,9 +27,16 @@ def f_link(message):
     if (fulnk):
         if(check_link(fulnk)):
             try:
-                bot.reply_to(message,give_subs(check_link(fulnk)))
-            except:
-                bot.reply_to(message,"### Message form developer the telegram api dosent allows to send too many strings so please bare with until we fix this, you can try with videos with less subs!!!, thank you!!")
+                transcript = give_subs(check_link(fulnk))
+                bot.reply_to(message,transcript)
+                # bot.reply_to(message,"Summarising your transcript . . .")
+                up_transcript = rise(transcript)
+                # time.sleep(2)
+                print(f"transcript: {up_transcript}")
+                # bot.reply_to(message,up_transcript)
+            except Exception as e:
+                bot.reply_to(message,f"### Message form developer the telegram api dosent allows to send too many strings so please bare with until we fix this, you can try with videos with less subs!!!, thank you!!{e}")
+                
         else:
             bot.reply_to(message,"Enter a valid Link")
     else:
