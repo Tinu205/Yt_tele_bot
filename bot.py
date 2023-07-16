@@ -1,11 +1,13 @@
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize, sent_tokenize
+
 import os
 from main import give_subs, check_link
 import telebot
-#from summarizer import rise
+from summarizer import summarize_text
 import time
+def write_data(data):
+    with open("data.txt","a") as file:
+        file.write(data)
+        file.close()
 
 bot_tok = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(bot_tok)
@@ -15,17 +17,20 @@ MAX_MESSAGE_LENGTH = 4065
 def send_welcome(message):
     bot.reply_to(message, "Hello!!, please type `/help` to get help !!")
     print(f"{message.from_user.username}:{message.from_user.first_name} -> {message.text}")
-
+    write_data(f"{message.from_user.first_name} -> {message.text}\n")
 @bot.message_handler(commands=['help'])
+
 def send_help(message):
-    bot.reply_to(message, "Hi I can help to you to get transcripts(subtitles) of youtube videos.Type `/getsubs` then paste the link for your video!!")
+    bot.reply_to(message, "Hi I can help to you to get transcripts (subtitles) of youtube videos. Type `/getsubs` then paste the link for your video!!")
     print(f"{message.from_user.username}:{message.from_user.first_name} -> {message.text}")
+    write_data(f"{message.from_user.first_name} -> {message.text} \n")
 
 @bot.message_handler(commands=['getsubs'], content_types=["text"])
 def f_link(message):
     arr = message.text.strip()  # Remove leading/trailing whitespace
     fulnk = arr.split("getsubs")[1].strip()  # Remove leading/trailing whitespace
-    print(f"{message.from_user.username}:{message.from_user.first_name} -> {message.text}")
+    print(f"{message.from_user.first_name} -> {message.text}")
+    write_data(f"{message.from_user.first_name} -> {message.text} \n")
     if fulnk:
         if check_link(fulnk):
             try:
