@@ -2,7 +2,7 @@
 import os
 from main import give_subs, check_link
 import telebot
-from summarizer import summarize_text
+#from summarizer import summarize_text
 import time
 def write_data(data):
     with open("data.txt","a") as file:
