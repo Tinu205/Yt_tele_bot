@@ -13,6 +13,7 @@ bot_tok = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(bot_tok)
 
 MAX_MESSAGE_LENGTH = 4065
+print("Bot up & running !!!")
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.reply_to(message, "Hello!!, please type `/help` to get help !!")
